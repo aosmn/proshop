@@ -9,6 +9,9 @@ import Cart from './screens/CartScreen';
 import Login from './screens/LoginScreen';
 import Register from './screens/RegisterScreen';
 import Profile from './screens/ProfileScreen';
+import Shipping from './screens/ShippingScreen';
+import Payment from './screens/PaymentScreen';
+import PlaceOrder from './screens/PlaceOrderScreen';
 
 const App = () => {
   return (
@@ -21,6 +24,9 @@ const App = () => {
           <Route path='/profile/:id?' component={Profile} />
           <Route path='/product/:id' component={Product} />
           <Route path='/cart/:id?' component={Cart} />
+          <Route path='/shipping' component={Shipping} />
+          <Route path='/payment' component={Payment} />
+          <Route path='/placeorder' component={PlaceOrder} />
           <Route exact path='/' component={Home} />
         </Container>
       </main>
