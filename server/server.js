@@ -5,7 +5,9 @@ import connectDB from './config/db.js';
 import productRouter from './routes/product.routes.js';
 import userRouter from './routes/user.routes.js';
 import orderRouter from './routes/order.routes.js';
+import uploadRouter from './routes/upload.routes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+import path from 'path';
 dotenv.config();
 
 connectDB();
@@ -19,9 +21,13 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);
+app.use('/api/upload', uploadRouter);
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 );
+
+const __dirname = path.resolve();
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 app.use(notFound);
 app.use(errorHandler);
 

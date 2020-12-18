@@ -34,6 +34,21 @@ const Header = () => {
                   <NavDropdown.Item onClick={logoutHandler}>
                     Logout
                   </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Header>Admin controls</NavDropdown.Header>
+                  {userInfo && userInfo.isAdmin && (
+                    <>
+                      <LinkContainer to='/admin/userlist'>
+                        <NavDropdown.Item>Users</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to='/admin/productlist'>
+                        <NavDropdown.Item>Products</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to='/admin/orderList'>
+                        <NavDropdown.Item>Orders</NavDropdown.Item>
+                      </LinkContainer>
+                    </>
+                  )}
                 </NavDropdown>
               ) : (
                 <LinkContainer to='/login'>
@@ -41,20 +56,6 @@ const Header = () => {
                     <i className='fas fa-user mr-1'></i>Sign In
                   </Nav.Link>
                 </LinkContainer>
-              )}
-
-              {userInfo && userInfo.isAdmin && (
-                <NavDropdown title='Admin' id='adminmenu'>
-                  <LinkContainer to='/admin/userlist'>
-                    <NavDropdown.Item>Users</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to='/admin/productlist'>
-                    <NavDropdown.Item>Products</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to='/admin/orderList'>
-                    <NavDropdown.Item>Orders</NavDropdown.Item>
-                  </LinkContainer>
-                </NavDropdown>
               )}
             </Nav>
           </Navbar.Collapse>

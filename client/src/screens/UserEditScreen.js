@@ -61,7 +61,7 @@ const RegisterScreen = ({ match, history }) => {
         {loadingUpdate ? (
           <Loader />
         ) : (
-          errorUpdate && <Message variant='danger'>{error}</Message>
+          errorUpdate && <Message variant='danger'>{errorUpdate}</Message>
         )}
         {loading ? (
           <Loader />

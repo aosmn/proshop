@@ -13,7 +13,11 @@ const UserListScreen = ({ history }) => {
   const { loading, error, users } = userList;
 
   const userDelete = useSelector(state => state.userDelete);
-  const { success: succssDelete } = userDelete;
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete
+  } = userDelete;
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
@@ -24,7 +28,7 @@ const UserListScreen = ({ history }) => {
     } else {
       history.push('/login');
     }
-  }, [dispatch, history, userInfo, succssDelete]);
+  }, [dispatch, history, userInfo, successDelete]);
 
   const deleteHandler = id => {
     if (window.confirm('Are you sure?')) dispatch(deleteUser(id));
@@ -32,6 +36,8 @@ const UserListScreen = ({ history }) => {
   return (
     <>
       <h1>Users</h1>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
