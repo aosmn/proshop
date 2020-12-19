@@ -8,11 +8,17 @@ import orderRouter from './routes/order.routes.js';
 import uploadRouter from './routes/upload.routes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import path from 'path';
+import morgan from 'morgan';
 dotenv.config();
 
 connectDB();
 
 const app = express();
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
 app.use(express.json());
 
 app.get('/', (req, res) => {

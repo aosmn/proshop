@@ -44,7 +44,7 @@ const createProduct = asyncHandler(async (req, res) => {
     name: 'Sample name',
     price: 0,
     user: req.user._id,
-    image: '/images/sample.jpg',
+    image: 'https://via.placeholder.com/250x250',
     brand: 'Sample brand',
     category: 'Sample category',
     countInStock: 0,
@@ -86,10 +86,55 @@ const updateProduct = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Create ne review
+// @route   POST /api/products/:id/review
+// @access  Private
+const createProductReview = asyncHandler(async (req, res) => {
+  const { rating, comment } = req.body;
+  const product = await Product.findById(req.params.id);
+  if (product) {
+    const alreadyReviewed = product.reviews.find(
+      r => r.user.toString() === req.user._id.toString()
+    );
+    if (alreadyReviewed) {
+      const oldReview = product.reviews.id(alreadyReviewed._id);
+      oldReview.rating = Number(rating);
+      oldReview.comment = comment;
+      product.rating =
+        product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+        product.numReviews;
+
+      await product.save();
+      res
+        .status(201)
+        .json({ isUpdated: true, message: 'Review updated successfully' });
+    } else {
+      const review = {
+        name: req.user.name,
+        rating: Number(rating),
+        comment,
+        user: req.user._id
+      };
+      product.reviews.push(review);
+      product.numReviews = product.reviews.length;
+      product.rating =
+        product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+        product.numReviews;
+
+      await product.save();
+      res.status(201).json({ message: 'Review Added successfully' });
+    }
+  } else {
+    res.status(404);
+    throw new Error('Product not found');
+  }
+});
+
 export {
   getProducts,
   getProductById,
   deleteProduct,
   createProduct,
-  updateProduct
+  updateProduct,
+  createProductReview
 };
