@@ -6,11 +6,13 @@ import { listProducts } from '../redux/actions/productActions';
 
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-
-const HomeScreen = () => {
+import Paginate from '../components/Paginate';
+const HomeScreen = ({ match }) => {
+  const keyword = match.params.keyword;
+  const pageNumber = match.params.pageNumber || 1;
   const dispatch = useDispatch();
   const productList = useSelector(state => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products, page, pages } = productList;
   const productsList =
     products &&
     products.map(product => (
@@ -20,8 +22,8 @@ const HomeScreen = () => {
     ));
 
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    dispatch(listProducts(keyword, pageNumber));
+  }, [dispatch, keyword, pageNumber]);
   return (
     <>
       <h1>Latest Products</h1>
@@ -30,7 +32,10 @@ const HomeScreen = () => {
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
-        <Row>{productsList}</Row>
+        <>
+          <Row>{productsList}</Row>
+          <Paginate pages={pages} page={page} keyword={keyword} />
+        </>
       )}
     </>
   );
