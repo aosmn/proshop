@@ -4,6 +4,10 @@ E-commerce app built using MERN stack and deployed on Heroku at [ProShop](https:
 
 ## Features
 
+- Authentication using JWT
+- Payment using paypal
+- Photo uploads to server using multernpm package
+
 ### Admin
 
 1. Create a product
