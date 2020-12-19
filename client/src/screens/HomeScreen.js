@@ -7,6 +7,8 @@ import { listProducts } from '../redux/actions/productActions';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Paginate from '../components/Paginate';
+import TopProducts from '../components/TopProducts';
+
 const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword;
   const pageNumber = match.params.pageNumber || 1;
@@ -26,6 +28,7 @@ const HomeScreen = ({ match }) => {
   }, [dispatch, keyword, pageNumber]);
   return (
     <>
+      {!keyword && products && <TopProducts />}
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />

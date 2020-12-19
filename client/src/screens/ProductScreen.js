@@ -145,7 +145,7 @@ const ProductScreen = ({ match, history }) => {
             </Col>
           </Row>
           <Row>
-            <Col md={6}>
+            <Col>
               <h2>Reviews</h2>
               <ListGroup variant='flush'>
                 {product.reviews.length === 0 ? (
