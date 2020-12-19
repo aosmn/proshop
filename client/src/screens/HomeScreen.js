@@ -2,12 +2,15 @@ import React, { useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Product from '../components/Product.js';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import { listProducts } from '../redux/actions/productActions';
 
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import Paginate from '../components/Paginate';
 import TopProducts from '../components/TopProducts';
+import Meta from '../components/Meta';
 
 const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword;
@@ -28,7 +31,16 @@ const HomeScreen = ({ match }) => {
   }, [dispatch, keyword, pageNumber]);
   return (
     <>
-      {!keyword && products && <TopProducts />}
+      <Meta />
+      {products ? (
+        !keyword ? (
+          <TopProducts />
+        ) : (
+          <Link to='/' className='btn btn-light'>
+            Go Back
+          </Link>
+        )
+      ) : null}
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />
